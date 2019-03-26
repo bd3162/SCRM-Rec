@@ -15,21 +15,20 @@ import com.example.demo.entity.RecoItem;
 @Mapper
 public interface RecoItemMapper {
    @Insert("<script>"
-   		+ "replace into personal_recom(user_id,prod_asin,reco_rank,update_time,source) values"
+   		+ "replace into personal_recom(user_id,prod_asin,reco_rank,update_time) values"
    		+ "<foreach collection='recoItems' item='recoItem'  separator=','>"
-   		+ "(#{recoItem.user_id},#{recoItem.prod_asin},#{recoItem.rank},#{recoItem.update_time},#{recoItem.source})"
+   		+ "(#{recoItem.user_id},#{recoItem.prod_asin},#{recoItem.rank},#{recoItem.update_time})"
    		+ "</foreach>"
    		+ "</script>")
    public void insertRecoItems(@Param("recoItems")Vector<RecoItem> recoItems);
    
-   @Insert("replace into personal_recom(user_id,prod_asin,reco_rank,update_time，source) values"
-   		+ "(#{recoItem.user_id},#{recoItem.prod_asin},#{recoItem.rank},#{recoItem.update_time},"
-   		+ "#{recoItem.source})")
+   @Insert("replace into personal_recom(user_id,prod_asin,reco_rank,update_time) values"
+   		+ "(#{recoItem.user_id},#{recoItem.prod_asin},#{recoItem.rank},#{recoItem.update_time})")
    public void insertRecoItem(@Param("recoItem") RecoItem recoItem);
 
    
    @Select("<script>"
-   		+ "select asin,imUrl,title from product where asin in("
+   		+ "select imUrl,title from product where asin in("
    		+ "<foreach collection='items' item='item' separator=','>"
    		+ "#{item}"
    		+ "</foreach>)"

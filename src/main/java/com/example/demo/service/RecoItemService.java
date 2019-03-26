@@ -53,31 +53,19 @@ public class RecoItemService {
 	   }
    }
    
-   public void savePics(String user,Set<String> histItems,
-		   Set<String> recoItems,Set<String> itemsOfSimilarUsers,String path) {
+   public void savePics(String user,Set<String> histItems,Set<String> recoItems,String path) {
 	   //测试时path自带分隔符
 	   String userPath=path+File.separator+user;
 	   String histPath=userPath+File.separator+"history";
 	   String recoPath=userPath+File.separator+"recommand";
-	   String recoUserPath=recoPath+File.separator+"User";
-	   String recoItemPath=recoPath+File.separator+"Item";
 	   File hist=new File(histPath);
 	   File reco=new File(recoPath);
-	   File recoUser=new File(recoUserPath);
-	   File recoItem=new File(recoItemPath);
 	   if(!hist.exists()) {
 		   hist.mkdirs();
 	   }
 	   if(!reco.exists()) {
 		   reco.mkdirs();
 	   }
-	   if(!recoUser.exists()) {
-		   recoUser.mkdirs();
-	   }
-	   if(!recoItem.exists()) {
-		   recoItem.mkdirs();
-	   }
-	   
 	   Vector<Product> hItems=recoItemMapper.getProducts(histItems);
 	   Vector<Product> rItems=recoItemMapper.getProducts(recoItems);
 	   
@@ -107,18 +95,12 @@ public class RecoItemService {
 			public void action(Object o) {
 				// TODO Auto-generated method stub
 			    Product item=(Product)o;
-			    String asin=item.getAsin();
 				String imUrl=item.getImUrl();
 				String title=item.getTitle();
 				Pattern pattern = Pattern.compile("[\\\\/:\\*\\?\\\"<>\\|]");
 		        Matcher matcher = pattern.matcher(title);
 		        title= matcher.replaceAll("");
-		        if(title.length()>200) {
-		        	title=title.substring(0, 200);
-		        }
-		        
-				String rootPath=itemsOfSimilarUsers.contains(asin)?recoUserPath:recoItemPath;
-				String filePath=rootPath+File.separator+title+".jpg";
+				String filePath=recoPath+File.separator+title+".jpg";
 				downloadPicture(imUrl,filePath);
 				System.out.println("下载"+title+"完成");
 			
