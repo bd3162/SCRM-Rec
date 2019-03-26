@@ -1,7 +1,9 @@
+
+spring.jmx.enabled=false
 #默认使用配置
-spring:
-  profiles:
-    active: dev
+#spring:
+#  profiles:
+#    active: dev
 
 #公共配置与profiles选择无关
 #mybatis:
@@ -20,3 +22,4 @@ spring:
     username: root
     password: SCRMbd3162.
     driver-class-name: com.mysql.cj.jdbc.Driver
+    
